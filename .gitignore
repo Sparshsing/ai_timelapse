@@ -1,0 +1,9 @@
+.ipynb_checkpoints/
+input_frames/
+output_frames/
+pretrained_models/
+eval/.ipynb_checkpoints/
+eval/__pycache__/
+frameinterpolation/
+
+
