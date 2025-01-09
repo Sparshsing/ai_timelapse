@@ -55,7 +55,7 @@ Example
 (middle image is interpolated)
 ![alt interpolated](sample_data/boy_interpolated.jpg)
 
-<video controls src="sample_data/boy.mp4" title="Video"></video>
+![boy animation](sample_data/boy.gif)
 
 ### Time-lapse Generation
 
@@ -77,8 +77,8 @@ Use the `time_lapse.ipynb` notebook to create a time-lapse video from multiple i
 
 The output video will be saved as `output_frames/sequence.mp4`.
 
-Example
-<video controls src="sample_data/lake_window.mp4" title="Timelapse"></video>
+Example  
+![timelapse animation](sample_data/lake_window.gif)
 
 ## Future Enhancements
 - Automatically identify date format from filenames/file metadata for time lapse
