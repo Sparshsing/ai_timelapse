@@ -12,3 +12,7 @@ google-cloud-bigquery-storage # Suppresses a harmless error from beam
 natsort
 gdown
 tqdm
+opencv-python
+mediapipe
+rembg
+numpy

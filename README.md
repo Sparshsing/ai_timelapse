@@ -9,6 +9,7 @@ https://github.com/google-research/frame-interpolation/tree/main
 - Frame interpolation between pairs of images using a pretrained neural network
 - Support for multiple input image formats (PNG, JPEG, BMP)
 - Automatic image resizing while maintaining aspect ratio
+- Face timelapse with automatic face centering and background removal
 - Configurable output FPS and interpolation settings
 - GPU acceleration support
 
@@ -80,6 +81,20 @@ The output video will be saved as `output_frames/sequence.mp4`.
 Example  
 ![timelapse animation](sample_data/lake_window.gif)
 
+## Face Time Lapse
+Set the preprocess_face variable to true in `time_lapse.ipynb` and `simple_interpolation` video and the images will be preprocessed to center the face and remove background to enhace the time lapse experience.
+
+1. Configure settings in the notebook:
+    ```python
+    input_dir = 'input_frames/sequence'
+    output_dir = 'output_frames/sequence'
+    preprocess_faces = True  # for faces
+    equal_intervals = True  # equal no frames between images or date based
+    fps = 24
+    ```
+Example
+![timelapse animation](sample_data/shahrukh-khan_face.gif)
+
 ## Future Enhancements
-- Automatically identify date format from filenames/file metadata for time lapse
-- Support for face time lapse (automatic face identification, centering, background removal, consistent lighting)
+- Automatically identify date format from filenames/file metadata for time lapse.
+- Improve face time lapse to handle multiple faces, and have consistent lighting.
