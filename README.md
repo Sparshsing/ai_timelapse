@@ -92,7 +92,17 @@ Set the preprocess_face variable to true in `time_lapse.ipynb` and `simple_inter
     equal_intervals = True  # equal no frames between images or date based
     fps = 24
     ```
-Example
+
+### Input
+<p float="left">
+  <img src="sample_data/shahrukh-khan/1992_deewana.jpg" width="19%" />
+  <img src="sample_data/shahrukh-khan/1993_baazigar.jpg" width="19%" />
+  <img src="sample_data/shahrukh-khan/1995_ddlj.jpg" width="19%" />
+  <img src="sample_data/shahrukh-khan/2001_kbkg.jpg" width="19%" />
+  <img src="sample_data/shahrukh-khan/2003_kal_ho_na_ho.jpeg" width="19%" />
+</p>
+
+### Output
 ![timelapse animation](sample_data/shahrukh-khan_face.gif)
 
 ## Future Enhancements
