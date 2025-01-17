@@ -1,6 +1,7 @@
 # AI-Powered Time-lapse Generation
 
 This project uses deep learning to create smooth time-lapse videos from a sequence of images by interpolating intermediate frames. It leverages the Film-Style frame interpolation model to generate natural transitions between input frames.
+
 Refer:
 https://github.com/google-research/frame-interpolation/tree/main
 
@@ -15,6 +16,14 @@ https://github.com/google-research/frame-interpolation/tree/main
 
 ## Setup
 
+### On Google colab
+1. Open `time_lapse_Google_Colab.ipynb` notebook directly in colab.
+2. Select runtime as T4 GPU from Settings.
+3. Run the notebook:
+Change the input and output paths and other settings
+4. Notebook will automatically download the github repository, install requirements and download models.
+
+### On Local
 1. Create a conda environment with TensorFlow and GPU support. If you are on Windows, use WSL.
 
 2. Install the required dependencies:
@@ -22,14 +31,8 @@ https://github.com/google-research/frame-interpolation/tree/main
     pip install -r requirements.txt
     ```
 
-3. Download the pretrained model:
-    ```python
-    import gdown
-    import os
-    os.makedirs('pretrained_models/film_net/Style/saved_model', exist_ok=True)
-    folder_url = 'https://drive.google.com/drive/folders/1i9Go1YI2qiFWeT5QtywNFmYAA74bhXWj'
-    gdown.download_folder(folder_url, output='pretrained_models/film_net/Style/saved_model')
-    ```
+3. Run the notebooks:
+Select and input and output paths
 
 ## Usage
 
