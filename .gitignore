@@ -6,5 +6,6 @@ pretrained_models/
 eval/.ipynb_checkpoints/
 eval/__pycache__/
 frameinterpolation/
+/temp_code
 
 

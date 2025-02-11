@@ -6,6 +6,8 @@ from pathlib import Path
 import logging
 from typing import Tuple, Optional
 from natsort import natsorted
+from face_alignment import align_faces
+from skimage.exposure import match_histograms
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -216,12 +218,22 @@ def remove_background(
         raise ImageProcessingError(f"Error in background removal: {str(e)}")
 
 
+def fix_lighting(target_img: np.ndarray, ref_img: np.ndarray) -> np.ndarray:
+    """
+    Perform histogram matching: adjust target image to have a similar histogram to the reference image.
+    """
+    matched_img = match_histograms(target_img, ref_img, channel_axis=-1)
+    return matched_img
+
+
 def process_face_image(
     image_path: str,
     output_path: str,
+    reference_path: str,
     target_size: Tuple[int, int] = (1000, 1000),
     background_color: Tuple[int, int, int] = (255, 255, 255),
-    save_bbox_preview: bool = False
+    save_bbox_preview: bool = False,
+    fix_lighting: bool = False
 ) -> None:
     """
     Main function to process the face image.
@@ -229,6 +241,7 @@ def process_face_image(
     Args:
         image_path: Path to input image
         output_path: Path to save the processed image
+        reference_path: Path to reference image for alignment
         target_size: Final image size (width, height)
         background_color: RGB color tuple for background after removal
         save_bbox_preview: If True, saves an additional image with drawn bounding box
@@ -267,6 +280,21 @@ def process_face_image(
         # Remove background
         final_image = remove_background(resized_image, background_color)
         logger.info("Background removed")
+
+
+        # align faces
+        ref_image = load_image(reference_path)
+        aligned_image = align_faces(final_image, ref_image)
+        face_bbox = detect_face(aligned_image)
+        if face_bbox is None:
+            raise ImageProcessingError("No face detected in the image")
+        centered_image = crop_and_center_face(aligned_image, face_bbox)
+        resized_image = resize_image(centered_image, target_size)
+        final_image = remove_background(resized_image, background_color)
+
+        # fix lighting:
+        if fix_lighting:
+            final_image = fix_lighting(target_img=final_image, ref_img=ref_image)
         
         # Save result as JPG
         cv2.imwrite(
@@ -284,6 +312,7 @@ def process_face_image(
 def process_directory(
     input_dir: str,
     output_dir: str,
+    reference_img_name = '',
     target_size: Tuple[int, int] = (1000, 1000),
     background_color: Tuple[int, int, int] = (255, 255, 255),
     save_bbox_preview: bool = False
@@ -317,6 +346,24 @@ def process_directory(
         
         total_files = len(image_files)
         logger.info(f"Found {total_files} images to process")
+
+        # find the reference image
+        if reference_img_name == '':
+            reference_path = image_files[0]
+        else:
+            reference_path = None
+            for image_path in image_files:
+                if image_path.name == reference_img_name:
+                    reference_path = image_path.with_name(reference_img_name)
+                    break
+                elif str(image_path) == reference_img_name:
+                    reference_path = image_path
+                    break
+                else:
+                    continue
+            if not reference_path is None:
+                raise Exception('Reference image not found')
+        
         
         # Process each image
         for idx, image_path in enumerate(image_files, 1):
@@ -327,6 +374,7 @@ def process_directory(
                 process_face_image(
                     str(image_path),
                     str(output_path),
+                    str(reference_path),
                     target_size,
                     background_color,
                     save_bbox_preview
