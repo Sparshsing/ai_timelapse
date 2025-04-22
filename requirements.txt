@@ -1,20 +1,12 @@
-# Docker base image: `gcr.io/deeplearning-platform-release/tf2-gpu.2-6:latest`
-# tensorflow # The latest should include tensorflow-gpu
-tensorflow-datasets
-tensorflow-addons
+tensorflow
+mediapipe  # mediapipe needs numpy < 2.0
 absl-py
-gin-config
-parameterized
 mediapy
 scikit-image
-apache-beam
-google-cloud-bigquery-storage # Suppresses a harmless error from beam
 natsort
-gdown
 tqdm
 opencv-python
-mediapipe
 rembg
-numpy
 onnxruntime
 dlib
+numpy==2.0.1  # tf needs numpy >= 2.0, but mediapipe needs < 2.0. But mediapipe does not throw error.
