@@ -5,7 +5,12 @@ output_frames/
 pretrained_models/
 eval/.ipynb_checkpoints/
 eval/__pycache__/
-frameinterpolation/
+frame-interpolation/
+frame-interpolation/photos/
 /temp_code
-
+ECCV2022-RIFE/
+output_frames_rife/
+temp_frames_rife/
+output_frames_cv/
+train_log/
 
